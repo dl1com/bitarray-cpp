@@ -80,6 +80,7 @@
 /***************************************************************************
 *                             INCLUDED FILES
 ***************************************************************************/
+#include <cstring>
 #include <iostream>
 #include <climits>
 #include "bitarray.h"
@@ -148,6 +149,32 @@ bit_array_c::bit_array_c(unsigned char *array, const int numBits):
     m_NumBits(numBits),
     m_Array(array)
 {
+}
+
+/***************************************************************************
+*   Method     : bit_array_c - constructor
+*   Description: This is the bit_array_c constructor.  It copies the
+*                for contents of a vector of unsigned char into the
+*                bitarray.
+*   Parameters : vect - vector to be copied
+*                numBits - number of bits in the array
+*   Effects    : Allocates vectory for array bits
+*   Returned   : None
+***************************************************************************/
+bit_array_c::bit_array_c(const unsigned char *array, const int numBits):
+    m_NumBits(numBits)
+{
+    int numBytes;
+
+    numBytes = BITS_TO_CHARS(numBits);
+
+    /* allocate space for bit array */
+    m_Array = new unsigned char[numBytes];
+
+    /* set all bits to 0 */
+    fill_n(m_Array, numBytes, 0);
+
+    memcpy(m_Array, array, numBytes);
 }
 
 /***************************************************************************

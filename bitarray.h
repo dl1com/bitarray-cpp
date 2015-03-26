@@ -91,6 +91,7 @@ class bit_array_c
     public:
         bit_array_c(const int numBits);
         bit_array_c(unsigned char *array, const int numBits);
+        bit_array_c(const unsigned char *array, const int numBits);
 
         virtual ~bit_array_c(void);
 

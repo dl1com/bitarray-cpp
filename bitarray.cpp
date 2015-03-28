@@ -199,7 +199,7 @@ bit_array_c::~bit_array_c(void)
 *   Effects    : Array contents are dumped to stdout
 *   Returned   : None
 ***************************************************************************/
-void bit_array_c::Dump(std::ostream &outStream)
+void bit_array_c::Dump(std::ostream &outStream) const
 {
     int size;
 
@@ -354,7 +354,15 @@ bool bit_array_c::operator==(const bit_array_c &other) const
         return false;
     }
 
-    return (this->m_Array == other.m_Array);
+    for(unsigned int i = 0; i < BITS_TO_CHARS(this->m_NumBits); i++)
+    {
+        if(this->m_Array[i] != other.m_Array[i])
+        {
+            return false;
+        }
+    }
+    return true;
+    //return (this->m_Array == other.m_Array);
 }
 
 /***************************************************************************
@@ -973,6 +981,51 @@ bit_array_c& bit_array_c::operator>>=(const unsigned int shifts)
     }
 
     return *this;
+}
+
+/***************************************************************************
+*   Method     : 
+*   Description: 
+*   Parameters : 
+*   Effects    : 
+*   Returned   : 
+***************************************************************************/
+void bit_array_c::Copy(const unsigned int target, 
+                    const bit_array_c &src,
+                    const unsigned int source,
+                    const unsigned int count)
+{
+    if (*this == src)
+    {
+        /* don't do anything for a self assignment */
+        return;
+    }
+
+    if ((m_NumBits == 0) || (src.m_NumBits == 0))
+    {
+        /* don't do assignment with unallocated array */
+        return;
+    }
+
+    if (src.Size() < (source+count)
+        || this->Size() < (target+count))
+    {
+        /* don't do assignment if it does not fit */
+        return;
+    }
+
+    // TODO get rid of bitwise copy; copy chars!
+    for (unsigned int i = 0; i<count; i++)
+    {
+        if(src[source+i])
+        {
+            this->SetBit(target+i);
+        }
+        else
+        {
+            this->ClearBit(target+i);
+        }
+    }
 }
 
 /***************************************************************************

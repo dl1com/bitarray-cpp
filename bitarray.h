@@ -95,9 +95,9 @@ class bit_array_c
 
         virtual ~bit_array_c(void);
 
-        void Dump(std::ostream &outStream);
+        void Dump(std::ostream &outStream) const;
 
-        const unsigned int Size() { return m_NumBits; };
+        const unsigned int Size() const { return m_NumBits; };
 
         /* set/clear functions */
         void SetAll(void);
@@ -141,6 +141,11 @@ class bit_array_c
 
         bit_array_c& operator<<=(unsigned const int shifts);
         bit_array_c& operator>>=(unsigned const int shifts);
+
+        void Copy(const unsigned int target, 
+                    const bit_array_c &other,
+                    const unsigned int source,
+                    const unsigned int count );
 
     protected:
         unsigned int m_NumBits;                 /* number of bits in the array */

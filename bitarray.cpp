@@ -178,6 +178,29 @@ bit_array_c::bit_array_c(const unsigned char *array, const int numBits):
 }
 
 /***************************************************************************
+*   Method     : bit_array_c - copy constructor
+*   Description: 
+*   Parameters : 
+*   Effects    : 
+*   Returned   : 
+***************************************************************************/
+bit_array_c::bit_array_c(const bit_array_c &source):
+    m_NumBits(source.Size())
+{
+    int numBytes;
+
+    numBytes = BITS_TO_CHARS(source.Size());
+
+    /* allocate space for bit array */
+    m_Array = new unsigned char[numBytes];
+
+    /* set all bits to 0 */
+    fill_n(m_Array, numBytes, 0);
+
+    memcpy(m_Array, source.m_Array, numBytes);
+}
+
+/***************************************************************************
 *   Method     : ~bit_array_c - destructor
 *   Description: This is the bit_array_c destructor.  At this point it's
 *                just a place holder.
@@ -1026,6 +1049,31 @@ void bit_array_c::Copy(const unsigned int target,
             this->ClearBit(target+i);
         }
     }
+}
+
+/***************************************************************************
+*   Method     : 
+*   Description: 
+*   Parameters : 
+*   Effects    : 
+*   Returned   : 
+***************************************************************************/
+void bit_array_c::FromInt(const unsigned int value)
+{
+    // TODO Check for Borders
+    this->ClearAll();
+    for(unsigned int i=0; i<sizeof(value)*8; i++)
+    {
+        if (0x1 & (value >> i))
+        {
+            this->SetBit(i);
+        }
+    }
+}
+
+unsigned char* bit_array_c::GetArray(void) const
+{
+    return this->m_Array;
 }
 
 /***************************************************************************

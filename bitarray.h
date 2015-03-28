@@ -92,6 +92,7 @@ class bit_array_c
         bit_array_c(const int numBits);
         bit_array_c(unsigned char *array, const int numBits);
         bit_array_c(const unsigned char *array, const int numBits);
+        bit_array_c(const bit_array_c &source);
 
         virtual ~bit_array_c(void);
 
@@ -146,6 +147,9 @@ class bit_array_c
                     const bit_array_c &other,
                     const unsigned int source,
                     const unsigned int count );
+        void FromInt(const unsigned int value);
+
+        unsigned char* GetArray(void) const;
 
     protected:
         unsigned int m_NumBits;                 /* number of bits in the array */

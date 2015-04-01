@@ -93,6 +93,9 @@ class bit_array_c
         bit_array_c(unsigned char *array, const int numBits);
         bit_array_c(const unsigned char *array, const int numBits);
         bit_array_c(const bit_array_c &source);
+        bit_array_c(const bit_array_c &source, 
+                    const unsigned int startBit, 
+                    const unsigned int numBits);
 
         virtual ~bit_array_c(void);
 

@@ -201,6 +201,31 @@ bit_array_c::bit_array_c(const bit_array_c &source):
 }
 
 /***************************************************************************
+*   Method     : bit_array_c - partial copy constructor
+*   Description: 
+*   Parameters : 
+*   Effects    : 
+*   Returned   : 
+***************************************************************************/
+bit_array_c::bit_array_c(const bit_array_c &source, 
+                            const unsigned int startBit, 
+                            const unsigned int numBits):
+    m_NumBits(numBits)
+{
+    int numBytes;
+
+    numBytes = BITS_TO_CHARS(numBits);
+
+    /* allocate space for bit array */
+    m_Array = new unsigned char[numBytes];
+
+    /* set all bits to 0 */
+    fill_n(m_Array, numBytes, 0);
+
+    this->Copy(0, source, startBit, numBits);
+}
+
+/***************************************************************************
 *   Method     : ~bit_array_c - destructor
 *   Description: This is the bit_array_c destructor.  At this point it's
 *                just a place holder.
